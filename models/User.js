@@ -7,20 +7,30 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ["doctor", "patient"] },
 
   profileImage: String,
+  phone: String,
+  bio: String,
+  
+  // Doctor specific fields
   specialization: String,
   clinicAddress: String,
+  consultationFee: { type: Number, default: 0 },
+  experience: String,
+  qualifications: String,
+  profileComplete: { type: Boolean, default: false },
 
   location: {
-  type: {
-    type: String,
-    enum: ["Point"],
-    required: false
+    type: {
+      type: String,
+      enum: ["Point"],
+      required: false
+    },
+    coordinates: {
+      type: [Number],
+      required: false
+    }
   },
-  coordinates: {
-    type: [Number],
-    required: false
-  }
-}
+  
+  createdAt: { type: Date, default: Date.now }
 });
 
 userSchema.index({ location: "2dsphere" });

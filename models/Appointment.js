@@ -7,6 +7,7 @@ const appointmentSchema = new mongoose.Schema({
   specialization: String,
   description: String,
   clinicAddress: String,
+  amount: { type: Number, required: true, default: 0 },
 
   location: {
     type: { type: String, default: "Point" },
