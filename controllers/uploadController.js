@@ -14,7 +14,9 @@ exports.uploadProfileImage = async (req, res) => {
     });
 
     // Delete temporary file
-    fs.unlinkSync(req.file.path);
+    if (req.file?.path && fs.existsSync(req.file.path)) {
+      fs.unlinkSync(req.file.path);
+    }
 
     res.json({
       success: true,
@@ -22,7 +24,7 @@ exports.uploadProfileImage = async (req, res) => {
       publicId: result.public_id,
     });
   } catch (error) {
-    if (req.file) {
+    if (req.file?.path && fs.existsSync(req.file.path)) {
       fs.unlinkSync(req.file.path);
     }
     res.status(500).json({ message: "Error uploading image", error: error.message });
